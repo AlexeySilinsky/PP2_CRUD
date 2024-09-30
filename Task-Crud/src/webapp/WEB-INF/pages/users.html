@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users</title>
+</head>
+<body>
+<h1>Users List</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Last Name</th>
+        <th>email</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.lastname}"></td>
+        <td th:text="${user.email}"></td>
+        <td>
+            <a th:href="@{/users/{id}(id=${user.id})}" >Edit</a>
+            <form th:action="@{/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="POST"/>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/users/new">Add New User</a>
+<form action="/users/clear" method="post" onsubmit="return confirm('Are you sure you want to delete all users?');">
+    <button type="submit">Delete All Users</button>
+</form>
+</body>
+</html>
